@@ -3,22 +3,41 @@ import { Chart } from "chart.js";
 import { tvlData } from "../data/tvlData"; 
 
 function Example() {
-  useEffect(() => {
+  useEffect(() => { // at start of application..
     var ctx = document.getElementById('myChart').getContext('2d');
 
-    const dates = tvlData.map((data) => data.date);
-    const tvlValues = tvlData.map((data) => data.TVL); 
+    console.log(tvlData);
 
+    // we're grouping by asset
+    const groupedData = tvlData.reduce((acc, { date, asset, TVL }) => {
+      if (!acc[asset]) { // if asset not found in accumulator
+        acc[asset] = [{ date, TVL}];
+      } else {
+        acc[asset].push({ date, TVL });
+      }
+      return acc;
+    }, {}) // start accumulator as empty object
+
+    console.log("Grouped data: ", groupedData);
+
+    const datasets = Object.keys(groupedData).map((asset, index) => {
+      const color = `hsl(${360 * index / Object.keys(groupedData).length}, 100%, 50%)`;
+      return {
+        label: asset,
+        data: groupedData[asset].map((data) => data.TVL),
+        fill: false,
+        borderColor: color,
+        backgroundColor: color
+      }
+    })
+
+    const labels = groupedData[Object.keys(groupedData)[0]].map(({ date }) => date);
     
     var myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: dates,
-        datasets: [{
-          label: "Total Value Locked",
-          data: tvlValues,
-          fill: false,
-        }]
+        labels,
+        datasets
       },
     });
   }, [])
