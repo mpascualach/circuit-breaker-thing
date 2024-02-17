@@ -1,14 +1,15 @@
 import React from 'react';
-import Cell from '.Cell';
+import Cell from './Cell';
 
 function Board({ board }) {
+  console.log(board);
   return (
-    <div>
+    <div className=" grid grid-cols-9 gap-2">
       {board.map((row, i) => {
         return (
           <div key={i} className="row">
             {row.map((value, j) => {
-              <Cell key={j} value={value}/>
+              return <Cell key={j} value={ value || '' } />
             })}
           </div>
         )

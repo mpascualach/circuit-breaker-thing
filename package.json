@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@starknet-react/core": "^2.2.5"
+  }
+}
