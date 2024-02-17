@@ -18,10 +18,8 @@ function Example() {
       return acc;
     }, {}) // start accumulator as empty object
 
-    console.log("Grouped data: ", groupedData);
-
     const datasets = Object.keys(groupedData).map((asset, index) => {
-      const color = `hsl(${360 * index / Object.keys(groupedData).length}, 100%, 50%)`;
+      const color = `hsl(${360 * index / Object.keys(groupedData).length}, 100%, 50%)`; // HSL = Hue, Saturation, Lightness
       return {
         label: asset,
         data: groupedData[asset].map((data) => data.TVL),
@@ -44,7 +42,7 @@ function Example() {
   return (
     <>
       {/* line chart */}
-      <h1 className="w-[110px] mx-auto mt-10 text-xl font-semibold capitalize ">line Chart</h1>
+      <h1 className="w-[110px] mx-auto mt-10 text-xl font-semibold capitalize ">TVL over time</h1>
       <div className="w-[1100px] h-screen flex mx-auto my-auto">
         <div className='border border-gray-400 pt-0 rounded-xl  w-full h-fit my-auto  shadow-xl'>
           <canvas id='myChart'></canvas>
